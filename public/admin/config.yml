@@ -3,7 +3,7 @@
 
 backend:
   name: github
-  repo: YOUR-GITHUB-USERNAME/portfolio # filled in when we put the site online
+  repo: gabrielkirmelashvili23/portfolio
   branch: main
   # base_url: https://YOUR-AUTH-WORKER.workers.dev   # login helper, set up during launch
 
