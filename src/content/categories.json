@@ -1,0 +1,12 @@
+{
+  "categories": [
+    { "name": "Tech", "emoji": "🎯" },
+    { "name": "Talking Head Review", "emoji": "✨" },
+    { "name": "Fashion", "emoji": "🎬" },
+    { "name": "Eyewear", "emoji": "📸" },
+    { "name": "Phone Case", "emoji": "📱" },
+    { "name": "Perfume Ad", "emoji": "⚡" },
+    { "name": "Skincare", "emoji": "🧴" },
+    { "name": "Beauty", "emoji": "🌸" }
+  ]
+}

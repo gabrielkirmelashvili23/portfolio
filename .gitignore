@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+.claude/
+# Mood board references (kept local, not published)
+design/

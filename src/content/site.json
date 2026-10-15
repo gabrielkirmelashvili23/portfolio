@@ -1,0 +1,21 @@
+{
+  "name": "Gabriel Kirmelashvili",
+  "role": "UGC Creator",
+  "tagline": "Making everyday things worth talking about.",
+  "photo": "/media/uploads/profile.jpg",
+  "photoCaption": "Hi, this is me!",
+  "location": "United States",
+  "niches": ["Fashion", "Tech", "Accessories"],
+  "about": "Hi, I'm Gabriel, a photographer, videographer and UGC creator in Fashion, Lifestyle and Tech. I create high-quality product photos, lookbooks, unboxings and mobile-style UGC content that engages audiences and elevates brands online.",
+  "stats": [
+    { "value": "12", "label": "brands worked with" },
+    { "value": "10", "label": "UGC videos" },
+    { "value": "3.4K", "label": "Instagram followers" }
+  ],
+  "email": "gabrielkirmelashvili123@gmail.com",
+  "instagram": "https://www.instagram.com/gabriel_kirmelashvili/",
+  "tiktok": "https://www.tiktok.com/@gabriel_kirmelashvili",
+  "ctaText": "Work with me",
+  "contactHeading": "Let's make something people stop scrolling for.",
+  "contactText": "Tell me about your product and what you need. I usually reply within a day."
+}

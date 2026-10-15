@@ -1,0 +1,12 @@
+{
+    "title":  "Skincare demo",
+    "video":  "/media/videos/haruharu.mp4",
+    "poster":  "/media/videos/haruharu.jpg",
+    "categories":  [
+                       "Skincare"
+                   ],
+    "brand":  "Haruharu Wonder",
+    "featured":  false,
+    "badge":  "",
+    "order":  9
+}

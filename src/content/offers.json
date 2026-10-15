@@ -1,0 +1,35 @@
+{
+  "heading": "Ways we can work together",
+  "offers": [
+    {
+      "title": "Talking Head Review",
+      "price": "from $85",
+      "description": "Natural, unscripted talking-head video. Delivered in 3 days.",
+      "includes": ["1 talking head video (15–30s)", "Authentic delivery style", "Organic usage rights"]
+    },
+    {
+      "title": "Digital / App UGC Video",
+      "price": "from $100",
+      "description": "UGC video for an app or digital product. Delivered in 5 days, 1 revision.",
+      "includes": ["1 high-quality UGC video", "Organic usage rights", "Same-week delivery"]
+    },
+    {
+      "title": "Physical Product UGC Video",
+      "price": "from $250",
+      "description": "UGC video for a physical product, with an unboxing shot. Delivered in 10 days, 1 revision.",
+      "includes": ["1 high-quality UGC video", "Product unboxing shot", "Organic usage rights"]
+    },
+    {
+      "title": "Product Photography Pack",
+      "price": "from $450",
+      "description": "Editorial product photos for your feed, site or ads. Delivered in 10 days, 2 revisions.",
+      "includes": ["10 retouched editorial product photos", "High-res delivery", "Organic usage rights"]
+    },
+    {
+      "title": "Social Starter Pack",
+      "price": "from $500",
+      "description": "Videos and photos together, so you have content for every channel. Delivered in 10 days, 2 revisions.",
+      "includes": ["2 UGC videos (15–60s)", "5 lifestyle photos (high-res)", "Organic usage rights"]
+    }
+  ]
+}

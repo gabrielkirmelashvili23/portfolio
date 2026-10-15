@@ -1,0 +1,13 @@
+{
+    "title":  "Blue-light glasses",
+    "video":  "/media/videos/zenottic.mp4",
+    "poster":  "/media/videos/zenottic.jpg",
+    "categories":  [
+                       "Eyewear",
+                       "Fashion"
+                   ],
+    "brand":  "Zenottic",
+    "featured":  true,
+    "badge":  "Top performer",
+    "order":  2
+}

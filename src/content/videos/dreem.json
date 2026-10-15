@@ -1,0 +1,12 @@
+{
+    "title":  "Phone case showcase",
+    "video":  "/media/videos/dreem.mp4",
+    "poster":  "/media/videos/dreem.jpg",
+    "categories":  [
+                       "Phone Case"
+                   ],
+    "brand":  "Dreem",
+    "featured":  false,
+    "badge":  "",
+    "order":  8
+}

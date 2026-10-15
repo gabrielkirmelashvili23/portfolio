@@ -1,0 +1,199 @@
+# Admin panel settings (Sveltia CMS).
+# Every save commits to GitHub, and Cloudflare Pages rebuilds the site in about a minute.
+
+backend:
+  name: github
+  repo: YOUR-GITHUB-USERNAME/portfolio # filled in when we put the site online
+  branch: main
+  # base_url: https://YOUR-AUTH-WORKER.workers.dev   # login helper, set up during launch
+
+# site_url / display_url: set to your real domain at launch (must start with https://)
+
+media_folder: public/media/uploads
+public_folder: /media/uploads
+
+media_libraries:
+  default:
+    config:
+      max_file_size: 26214400 # 25 MB: Cloudflare's per-file limit
+      transformations:
+        # Photos are shrunk and converted to WebP automatically on upload.
+        raster_image:
+          format: webp
+          quality: 85
+          width: 2400
+          height: 2400
+
+collections:
+  # ---------- VIDEOS ----------
+  - name: videos
+    label: Videos
+    label_singular: Video
+    icon: movie
+    description: Every video shown in the "Videos I've created" section.
+    folder: src/content/videos
+    format: json
+    create: true
+    delete: true
+    slug: "{{slug}}-{{year}}{{month}}{{day}}"
+    summary: "{{title}} · {{brand}}"
+    sortable_fields: [order, title, brand]
+    media_folder: /public/media/videos
+    public_folder: /media/videos
+    fields:
+      - { name: title, label: Title, widget: string }
+      - name: video
+        label: Video file
+        widget: file
+        required: false
+        hint: MP4, vertical (9:16), under 25 MB. Export at 1080p from CapCut and it'll fit.
+      - name: poster
+        label: Cover image
+        widget: image
+        required: false
+        hint: Optional. Without one, the first frame of the video is used.
+      - name: categories
+        label: Categories
+        widget: relation
+        multiple: true
+        collection: settings
+        file: categories
+        search_fields: ["categories.*.name"]
+        value_field: "categories.*.name"
+        display_fields: ["categories.*.name"]
+        hint: Pick one or more. Add new categories under Site settings → Video categories.
+      - { name: brand, label: Brand, widget: string, required: false }
+      - { name: featured, label: "Featured (shows first)", widget: boolean, default: false }
+      - { name: badge, label: Badge, widget: string, required: false, hint: "e.g. Top performer or Best performing. Leave empty for no badge." }
+      - { name: order, label: Order, widget: number, value_type: int, default: 100, hint: Lower numbers show first. }
+
+  # ---------- PHOTOS ----------
+  - name: photos
+    label: Photos
+    label_singular: Photo
+    icon: photo_library
+    folder: src/content/photos
+    format: json
+    create: true
+    delete: true
+    slug: "photo-{{year}}{{month}}{{day}}-{{hour}}{{minute}}{{second}}"
+    summary: "{{caption}}"
+    sortable_fields: [order, caption]
+    media_folder: /public/media/photos
+    public_folder: /media/photos
+    fields:
+      - { name: image, label: Photo, widget: image }
+      - { name: caption, label: Handwritten caption, widget: string, required: false }
+      - { name: alt, label: Description (for screen readers and Google), widget: string, required: false }
+      - { name: order, label: Order, widget: number, value_type: int, default: 100, hint: Lower numbers show first. }
+
+  # ---------- SITE SETTINGS ----------
+  - name: settings
+    label: Site settings
+    icon: tune
+    editor:
+      preview: false
+    files:
+      - name: profile
+        label: Profile & contact
+        file: src/content/site.json
+        media_folder: /public/media/uploads
+        public_folder: /media/uploads
+        fields:
+          - { name: name, label: Your name, widget: string }
+          - { name: role, label: Title under your name, widget: string }
+          - { name: tagline, label: Tagline (lined note), widget: string }
+          - { name: photo, label: Profile photo, widget: image }
+          - { name: photoCaption, label: Photo caption, widget: string }
+          - { name: location, label: Based in, widget: string }
+          - { name: niches, label: Niche tags, widget: list, hint: e.g. Fashion, Tech, Accessories }
+          - { name: about, label: About me, widget: text, required: false }
+          - name: stats
+            label: Stats
+            widget: list
+            required: false
+            fields:
+              - { name: value, label: Number, widget: string }
+              - { name: label, label: Label, widget: string }
+          - { name: email, label: Contact email, widget: string }
+          - { name: instagram, label: Instagram link, widget: string, required: false }
+          - { name: tiktok, label: TikTok link, widget: string, required: false }
+          - { name: ctaText, label: Top button text, widget: string }
+          - { name: contactHeading, label: Contact heading, widget: string }
+          - { name: contactText, label: Contact text, widget: text }
+
+      - name: categories
+        label: Video categories
+        file: src/content/categories.json
+        fields:
+          - name: categories
+            label: Categories
+            widget: list
+            summary: "{{name}}"
+            fields:
+              - { name: name, label: Name, widget: string }
+
+      - name: brands
+        label: Brands I've worked with
+        file: src/content/brands.json
+        media_folder: /public/media/brands
+        public_folder: /media/brands
+        fields:
+          - name: brands
+            label: Brands
+            widget: list
+            summary: "{{name}}"
+            fields:
+              - { name: name, label: Brand name, widget: string }
+              - { name: logo, label: Logo, widget: image, required: false, hint: "PNG with a transparent background looks best. Without a logo, the name is shown." }
+
+      - name: offers
+        label: Offers
+        file: src/content/offers.json
+        fields:
+          - { name: heading, label: Section heading, widget: string }
+          - name: offers
+            label: Offers
+            widget: list
+            summary: "{{title}}"
+            fields:
+              - { name: title, label: Title, widget: string }
+              - { name: price, label: Price, widget: string, required: false, hint: "e.g. from $150. Leave empty to hide the price." }
+              - { name: description, label: Description, widget: text }
+              - { name: includes, label: What's included, widget: list, required: false }
+
+      - name: testimonials
+        label: Testimonials
+        file: src/content/testimonials.json
+        fields:
+          - name: testimonials
+            label: Testimonials
+            widget: list
+            summary: "{{name}}: {{quote}}"
+            fields:
+              - { name: quote, label: Quote, widget: text }
+              - { name: name, label: Person, widget: string }
+              - { name: brand, label: Brand, widget: string, required: false }
+
+      - name: design
+        label: Design
+        file: src/content/design.json
+        fields:
+          - name: background
+            label: Background
+            widget: select
+            options:
+              - { label: Grid paper, value: grid }
+              - { label: Dotted paper, value: dots }
+              - { label: Textured paper, value: paper }
+              - { label: Plain, value: plain }
+          - { name: paperColor, label: Background color, widget: color }
+          - { name: inkColor, label: Text color, widget: color }
+          - { name: accentColor, label: "Main accent (big surname, contact band, prices)", widget: color }
+          - { name: secondColor, label: "Second accent (stickers, tape, check marks)", widget: color }
+          - { name: noteColor, label: Sticky note & badge color, widget: color }
+          - name: headingFont
+            label: Headline font
+            widget: select
+            options: [Bricolage Grotesque, Instrument Serif, Fraunces, Playfair Display, EB Garamond]
+          - { name: showDoodles, label: Show spinning stickers, widget: boolean, default: true }

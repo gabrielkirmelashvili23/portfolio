@@ -1,0 +1,12 @@
+{
+    "title":  "Unboxing my new case",
+    "video":  "/media/videos/jetech.mp4",
+    "poster":  "/media/videos/jetech.jpg",
+    "categories":  [
+                       "Phone Case"
+                   ],
+    "brand":  "JETech",
+    "featured":  false,
+    "badge":  "",
+    "order":  6
+}

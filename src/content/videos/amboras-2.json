@@ -1,0 +1,13 @@
+{
+    "title":  "Talking head review",
+    "video":  "/media/videos/amboras-2.mp4",
+    "poster":  "/media/videos/amboras-2.jpg",
+    "categories":  [
+                       "Tech",
+                       "Talking Head Review"
+                   ],
+    "brand":  "Amboras",
+    "featured":  false,
+    "badge":  "",
+    "order":  7
+}

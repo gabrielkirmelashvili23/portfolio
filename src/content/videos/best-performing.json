@@ -1,0 +1,12 @@
+{
+    "title":  "Unboxing",
+    "video":  "/media/videos/best-performing.mp4",
+    "poster":  "/media/videos/best-performing.jpg",
+    "categories":  [
+                       "Tech"
+                   ],
+    "brand":  "",
+    "featured":  true,
+    "badge":  "Best performing",
+    "order":  1
+}

@@ -1,0 +1,353 @@
+---
+import '../styles/global.css';
+import site from '../content/site.json';
+import design from '../content/design.json';
+import { categories } from '../content/categories.json';
+import { brands } from '../content/brands.json';
+import offersData from '../content/offers.json';
+import { testimonials } from '../content/testimonials.json';
+
+// Every video / photo is its own small file, so the admin panel can add and remove them.
+const byOrder = (a, b) => (a.order ?? 100) - (b.order ?? 100);
+const videos = Object.values(import.meta.glob('../content/videos/*.json', { eager: true }))
+  .map((m) => m.default)
+  .map((v) => ({ ...v, categories: [v.categories ?? v.category ?? []].flat().filter(Boolean) }))
+  .sort((a, b) => Number(!!b.featured) - Number(!!a.featured) || byOrder(a, b));
+const photos = Object.values(import.meta.glob('../content/photos/*.json', { eager: true }))
+  .map((m) => m.default)
+  .sort(byOrder);
+
+// Only show filter chips for categories that actually have videos.
+const usedCategories = categories.filter((c) => videos.some((v) => v.categories.includes(c.name)));
+const offers = offersData.offers ?? [];
+
+const fonts = {
+  'Bricolage Grotesque': 'Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800',
+  'Instrument Serif': 'Instrument+Serif:ital@0;1',
+  'Fraunces': 'Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900',
+  'Playfair Display': 'Playfair+Display:ital,wght@0,400..900;1,400..900',
+  'EB Garamond': 'EB+Garamond:ital,wght@0,400..800;1,400..800',
+};
+const headingFont = fonts[design.headingFont] ? design.headingFont : 'Bricolage Grotesque';
+const families = [
+  fonts[headingFont],
+  headingFont !== 'Instrument Serif' && fonts['Instrument Serif'],
+  'Inter:wght@400;500;600',
+  'JetBrains+Mono:wght@400;500',
+  'Caveat:wght@500;700',
+].filter(Boolean);
+const fontUrl = `https://fonts.googleapis.com/css2?${families.map((f) => `family=${f}`).join('&')}&display=swap`;
+
+const themeVars = [
+  `--paper:${design.paperColor}`,
+  `--ink:${design.inkColor}`,
+  `--accent:${design.accentColor}`,
+  `--accent-2:${design.secondColor ?? '#4a7bd0'}`,
+  `--note:${design.noteColor}`,
+  `--font-display:'${headingFont}', 'Arial Narrow', system-ui, sans-serif`,
+].join(';');
+
+const [firstName, ...rest] = site.name.split(' ');
+const lastName = rest.join(' ');
+const initials = site.name.split(' ').map((w) => w[0]).join('');
+
+// Chapters are numbered in the order they appear, skipping empty ones.
+const chapters = [
+  videos.length && { id: 'work', nav: 'Work' },
+  photos.length && { id: 'photos', nav: 'Photos' },
+  site.about && { id: 'about', nav: 'About' },
+  offers.length && { id: 'offers', nav: 'Rates' },
+  testimonials.length && { id: 'reviews', nav: 'Reviews' },
+].filter(Boolean);
+const num = (id) => String(chapters.findIndex((c) => c.id === id) + 1).padStart(2, '0');
+
+const tilts = [-2, 1.6, -1, 2.2, -1.6, 1];
+const noteTints = ['var(--note)', '#f4c6bd', '#c9dcf3', '#d6e8cf'];
+const mail = (subject) => `mailto:${site.email}?subject=${encodeURIComponent(subject)}`;
+const year = new Date().getFullYear();
+const ticker = [...site.niches, 'UGC videos', 'Product photos', 'Unboxings', 'Talking head reviews'];
+---
+<!doctype html>
+<html lang="en" style={themeVars} data-bg={design.background}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{site.name} · {site.role}</title>
+    <meta name="description" content={`${site.role} · ${site.niches.join(', ')}. ${site.tagline}`} />
+    <meta property="og:title" content={`${site.name} · ${site.role}`} />
+    <meta property="og:description" content={site.tagline} />
+    <meta property="og:image" content={site.photo} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content={design.paperColor} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={fontUrl} />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <symbol id="i-asterisk" viewBox="0 0 40 40"><path d="M20 3v34M5.3 11.5l29.4 17M5.3 28.5l29.4-17" /></symbol>
+      <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.6" /></symbol>
+      <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5" /><path d="M14 3c.5 2.8 2.3 4.5 5 4.8" /></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" /></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z" /><circle cx="12" cy="10" r="2.3" /></symbol>
+    </svg>
+
+    <a class="skip" href="#work">Skip to work</a>
+
+    <header class="topbar">
+      <a href="#top" class="logo" aria-label={`${site.name}, back to top`}>{initials}</a>
+      <nav class="nav" aria-label="Sections">
+        {chapters.map((c) => <a href={`#${c.id}`}>{c.nav}</a>)}
+      </nav>
+      <a href="#contact" class="btn btn-accent btn-small">{site.ctaText}</a>
+    </header>
+
+    <main id="top">
+      <!-- ============ HERO ============ -->
+      <section class="hero" aria-labelledby="hero-name">
+        <p class="meta-row rise" style="--i:0">
+          <span>{site.role}</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span><svg class="ico" aria-hidden="true"><use href="#i-pin" /></svg> {site.location}</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="live"><i aria-hidden="true"></i>Open for projects</span>
+        </p>
+
+        <h1 id="hero-name" class="hero-name">
+          <span class="line rise" style="--i:1">{firstName}</span>
+          {lastName && <span class="line rise" style="--i:2">{lastName}</span>}
+        </h1>
+
+        <figure class="polaroid hero-photo rise" style="--i:3">
+          <span class="tape" aria-hidden="true"></span>
+          <img src={site.photo} alt={`Portrait of ${site.name}`} width="800" height="1000" fetchpriority="high" />
+          <figcaption>{site.photoCaption}</figcaption>
+        </figure>
+
+        {design.showDoodles && (
+          <>
+            <svg class="sticker sticker-a" aria-hidden="true"><use href="#i-asterisk" /></svg>
+            <svg class="sticker sticker-b" aria-hidden="true"><use href="#i-asterisk" /></svg>
+          </>
+        )}
+
+        <div class="hero-foot">
+          <p class="tagline rise" style="--i:4">{site.tagline}</p>
+          <div class="hero-actions rise" style="--i:5">
+            <a href="#work" class="btn btn-ink">See my work <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            <div class="socials">
+              {site.instagram && <a href={site.instagram} target="_blank" rel="noopener" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-instagram" /></svg></a>}
+              {site.tiktok && <a href={site.tiktok} target="_blank" rel="noopener" aria-label="TikTok"><svg aria-hidden="true"><use href="#i-tiktok" /></svg></a>}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ticker band -->
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          {[0, 1].map(() => (
+            <span class="ticker-set">
+              {ticker.map((t) => <><span>{t}</span><svg><use href="#i-asterisk" /></svg></>)}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- Brands -->
+      {brands.length > 0 && (
+        <section class="brands" aria-labelledby="brands-title">
+          <h2 id="brands-title" class="eyebrow center">Trusted by brands like</h2>
+          <div class="marquee" style={`--count:${brands.length}`}>
+            <ul class="marquee-track">
+              {[...brands, ...brands].map((b, i) => (
+                <li class="brand" aria-hidden={i >= brands.length ? 'true' : undefined}>
+                  {b.logo ? <img src={b.logo} alt={b.name} loading="lazy" /> : <span>{b.name}</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      <!-- ============ 01 WORK ============ -->
+      {videos.length > 0 && (
+        <section class="chapter" id="work" aria-labelledby="work-title">
+          <header class="chapter-head reveal">
+            <span class="chapter-num" aria-hidden="true">{num('work')}</span>
+            <p class="eyebrow">Selected work</p>
+            <h2 id="work-title" class="chapter-title">Videos I've created</h2>
+          </header>
+
+          {usedCategories.length > 1 && (
+            <div class="chips" role="group" aria-label="Filter videos by category">
+              <button class="chip is-active" data-filter="all" aria-pressed="true">All <span>{videos.length}</span></button>
+              {usedCategories.map((c) => (
+                <button class="chip" data-filter={c.name} aria-pressed="false">
+                  {c.name} <span>{videos.filter((v) => v.categories.includes(c.name)).length}</span>
+                </button>
+              ))}
+            </div>
+          )}
+
+          <ul class="video-grid">
+            {videos.map((v, i) => (
+              <li class="video-card reveal" data-categories={JSON.stringify(v.categories)} style={`--i:${i % 4}`}>
+                <button
+                  class="video-frame"
+                  data-video={v.video || undefined}
+                  data-title={v.title}
+                  aria-label={v.video ? `Play ${v.title}${v.brand ? ' for ' + v.brand : ''}` : `${v.title} (coming soon)`}
+                  disabled={!v.video}
+                >
+                  {v.video ? (
+                    <video data-src={`${v.video}#t=0.1`} poster={v.poster || undefined} muted loop playsinline preload="none"></video>
+                  ) : (
+                    <span class="video-empty">Video coming soon</span>
+                  )}
+                  {v.badge && <span class="badge">{v.badge}</span>}
+                  {v.video && <span class="play" aria-hidden="true"><svg><use href="#i-play" /></svg></span>}
+                </button>
+                <p class="video-meta">
+                  <span class="video-title">{v.title}</span>
+                  {v.brand && <span class="video-brand">{v.brand}</span>}
+                </p>
+              </li>
+            ))}
+          </ul>
+          <p class="chapter-cta reveal"><a href="#contact" class="link-arrow">Want videos like these? Let's talk <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a></p>
+        </section>
+      )}
+
+      <!-- ============ 02 PHOTOS ============ -->
+      {photos.length > 0 && (
+        <section class="chapter" id="photos" aria-labelledby="photos-title">
+          <header class="chapter-head reveal">
+            <span class="chapter-num" aria-hidden="true">{num('photos')}</span>
+            <p class="eyebrow">Stills</p>
+            <h2 id="photos-title" class="chapter-title">Product &amp; lifestyle photos</h2>
+          </header>
+          <ul class="photo-grid">
+            {photos.map((p, i) => (
+              <li class="reveal" style={`--tilt:${tilts[i % tilts.length] / 1.5}deg; --i:${i % 3}`}>
+                <button class="polaroid photo" data-photo={p.image} aria-label={`Open photo: ${p.alt || p.caption || 'portfolio photo'}`}>
+                  <img src={p.image} alt={p.alt || p.caption || `Photo by ${site.name}`} loading="lazy" />
+                  {p.caption && <span class="caption">{p.caption}</span>}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <!-- ============ 03 ABOUT ============ -->
+      {site.about && (
+        <section class="chapter about" id="about" aria-labelledby="about-title">
+          <header class="chapter-head reveal">
+            <span class="chapter-num" aria-hidden="true">{num('about')}</span>
+            <p class="eyebrow">About me</p>
+            <h2 id="about-title" class="chapter-title">The person behind the camera</h2>
+          </header>
+          <div class="about-grid">
+            <p class="about-text reveal">{site.about}</p>
+            <div class="about-side reveal" style="--i:1">
+              {site.stats?.length > 0 && (
+                <dl class="stats">
+                  {site.stats.map((s) => <div><dt>{s.label}</dt><dd>{s.value}</dd></div>)}
+                </dl>
+              )}
+              <div class="sticky-note" style="--tilt:2deg">
+                <span class="tape" aria-hidden="true"></span>
+                <p class="note-label">I create for</p>
+                <ul class="tags">{site.niches.map((n) => <li>{n}</li>)}</ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <!-- ============ 04 OFFERS ============ -->
+      {offers.length > 0 && (
+        <section class="chapter" id="offers" aria-labelledby="offers-title">
+          <header class="chapter-head reveal">
+            <span class="chapter-num" aria-hidden="true">{num('offers')}</span>
+            <p class="eyebrow">Rates</p>
+            <h2 id="offers-title" class="chapter-title">{offersData.heading}</h2>
+          </header>
+          <ul class="offer-grid">
+            {offers.map((o, i) => (
+              <li class="offer reveal" style={`--i:${i % 3}`}>
+                <h3 class="offer-title">{o.title}</h3>
+                {o.price && <p class="price">{o.price}</p>}
+                <p class="offer-desc">{o.description}</p>
+                {o.includes?.length > 0 && (
+                  <ul class="includes">
+                    {o.includes.map((x) => <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg>{x}</li>)}
+                  </ul>
+                )}
+                <a class="btn btn-ghost offer-btn" href={mail(`${o.title.replace(/^\W+/, '').trim()}, collab with ${firstName}`)}>Book this</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <!-- ============ 05 REVIEWS ============ -->
+      {testimonials.length > 0 && (
+        <section class="chapter" id="reviews" aria-labelledby="reviews-title">
+          <header class="chapter-head reveal">
+            <span class="chapter-num" aria-hidden="true">{num('reviews')}</span>
+            <p class="eyebrow">Kind words</p>
+            <h2 id="reviews-title" class="chapter-title">What brands say</h2>
+          </header>
+          <ul class="review-grid">
+            {testimonials.map((t, i) => (
+              <li class="review reveal" style={`--tilt:${tilts[(i + 1) % tilts.length]}deg; --tint:${noteTints[i % noteTints.length]}; --i:${i % 4}`}>
+                <span class="tape" aria-hidden="true"></span>
+                <blockquote>“{t.quote}”</blockquote>
+                <p class="who">{t.name}{t.brand && <span>, {t.brand}</span>}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <!-- ============ CONTACT ============ -->
+      <section class="contact" id="contact" aria-labelledby="contact-title">
+        {design.showDoodles && <svg class="sticker sticker-c" aria-hidden="true"><use href="#i-asterisk" /></svg>}
+        <div class="contact-inner">
+          <p class="eyebrow on-accent">Let's work together</p>
+          <h2 id="contact-title" class="contact-title reveal">{site.contactHeading}</h2>
+          <p class="contact-text reveal" style="--i:1">{site.contactText}</p>
+          <div class="contact-actions reveal" style="--i:2">
+            <a class="btn btn-paper" href={mail(`Collab with ${firstName}`)}>Email me <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            <button class="btn btn-outline-paper" data-copy={site.email}>Copy email</button>
+          </div>
+          <p class="contact-email">{site.email}</p>
+          <div class="socials on-accent">
+            {site.instagram && <a href={site.instagram} target="_blank" rel="noopener" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-instagram" /></svg></a>}
+            {site.tiktok && <a href={site.tiktok} target="_blank" rel="noopener" aria-label="TikTok"><svg aria-hidden="true"><use href="#i-tiktok" /></svg></a>}
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>© {year} {site.name}</span>
+      <a href="#top">Back to top ↑</a>
+    </footer>
+
+    <dialog class="lightbox" aria-label="Media viewer">
+      <button class="lightbox-close" aria-label="Close">×</button>
+      <div class="lightbox-body"></div>
+    </dialog>
+
+    <script>
+      import '../scripts/site.js';
+    </script>
+  </body>
+</html>

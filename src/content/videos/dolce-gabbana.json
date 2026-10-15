@@ -1,0 +1,12 @@
+{
+    "title":  "Perfume ad",
+    "video":  "/media/videos/dolce-gabbana.mp4",
+    "poster":  "/media/videos/dolce-gabbana.jpg",
+    "categories":  [
+                       "Perfume Ad"
+                   ],
+    "brand":  "Dolce \u0026 Gabbana",
+    "featured":  false,
+    "badge":  "",
+    "order":  5
+}

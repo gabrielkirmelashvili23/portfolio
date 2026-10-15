@@ -1,0 +1,13 @@
+{
+    "title":  "Store builder review",
+    "video":  "/media/videos/amboras-1.mp4",
+    "poster":  "/media/videos/amboras-1.jpg",
+    "categories":  [
+                       "Tech",
+                       "Talking Head Review"
+                   ],
+    "brand":  "Amboras",
+    "featured":  false,
+    "badge":  "",
+    "order":  3
+}

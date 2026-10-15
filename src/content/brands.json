@@ -1,0 +1,16 @@
+{
+  "brands": [
+    { "name": "Dolce & Gabbana", "logo": "/media/brands/dolcegabbana.png" },
+    { "name": "Zenottic", "logo": "/media/brands/zenottic.webp" },
+    { "name": "JETech", "logo": "/media/brands/jetech.png" },
+    { "name": "Octobuddy", "logo": "/media/brands/octobuddy.png" },
+    { "name": "Oten", "logo": "/media/brands/oten.webp" },
+    { "name": "Otake.io", "logo": "/media/brands/otake.jpg" },
+    { "name": "Haruharu Wonder", "logo": "/media/brands/haruharu.png" },
+    { "name": "UZN", "logo": "/media/brands/uzn.jpg" },
+    { "name": "Amboras", "logo": "/media/brands/amboras.png" },
+    { "name": "Alfheim Aromaterapi", "logo": "/media/brands/alfheim.png" },
+    { "name": "Dreem", "logo": "/media/brands/dreem.png" },
+    { "name": "Mesauda", "logo": "" }
+  ]
+}

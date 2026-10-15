@@ -1,0 +1,13 @@
+{
+    "title":  "App review",
+    "video":  "/media/videos/otake.mp4",
+    "poster":  "/media/videos/otake.jpg",
+    "categories":  [
+                       "Tech",
+                       "Talking Head Review"
+                   ],
+    "brand":  "Otake.io",
+    "featured":  false,
+    "badge":  "",
+    "order":  4
+}

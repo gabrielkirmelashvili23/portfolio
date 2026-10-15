@@ -1,0 +1,12 @@
+{
+    "title":  "Hair oil",
+    "video":  "/media/videos/alfheim.mp4",
+    "poster":  "/media/videos/alfheim.jpg",
+    "categories":  [
+                       "Beauty"
+                   ],
+    "brand":  "Alfheim Aromaterapi",
+    "featured":  false,
+    "badge":  "",
+    "order":  10
+}
