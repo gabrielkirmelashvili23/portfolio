@@ -76,8 +76,11 @@ const ticker = [...site.niches, 'UGC videos', 'Product photos', 'Unboxings', 'Ta
     <meta name="description" content={`${site.role} · ${site.niches.join(', ')}. ${site.tagline}`} />
     <meta property="og:title" content={`${site.name} · ${site.role}`} />
     <meta property="og:description" content={site.tagline} />
-    <meta property="og:image" content={site.photo} />
+    <meta property="og:image" content={new URL(site.photo, Astro.site).href} />
+    <meta property="og:url" content={Astro.site?.href} />
     <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href={Astro.site?.href} />
     <meta name="theme-color" content={design.paperColor} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

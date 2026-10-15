@@ -7,7 +7,9 @@ backend:
   branch: main
   # base_url: https://YOUR-AUTH-WORKER.workers.dev   # login helper, set up during launch
 
-# site_url / display_url: set to your real domain at launch (must start with https://)
+site_url: https://gabrielkirmelashvili.pages.dev
+display_url: https://gabrielkirmelashvili.pages.dev
+logo_url: /favicon.svg
 
 media_folder: public/media/uploads
 public_folder: /media/uploads
